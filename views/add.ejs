@@ -1,0 +1,85 @@
+<%- include('partials/headerAdd'); -%>
+
+<div class="add">
+  <div class="addTopRow">
+
+  <%  const now = new Date(); %>
+  <%  const options = {year: "numeric", month: "long", day: "numeric"}; %>
+  <%  const todaysDate = now.toLocaleDateString('en-GB', options); %>
+
+
+    <p> <%= todaysDate %> </p>
+
+    <p> <%= now.getHours() %>:<%= now.getMinutes() %>  </p>
+  </div>
+  <hr>
+
+  <!-- form
+--------------------------------------------------------------------------- -->
+  <form class="" action="<%= heading %>" method="post">
+    <div class="addReps">
+      <div class="reps">
+        <!--
+      ---------------------------------------------------------------------->
+        <input type="number" name="newSet" placeholder="REPS">
+        <div class="buttons">
+          <button type="button" name="button" class="smallBtn">+</button>
+          <button type="button" name="button" class="smallBtn">-</button>
+        </div>
+      </div>
+
+      <!--
+    ------------------------------------------------------------------ -->
+
+      <div class="weight">
+        <input type="number" name="newWeight" placeholder="WEIGHT">
+        <div class="buttons">
+          <button type="button" name="button" class="smallBtn">+</button>
+          <button type="button" name="button" class="smallBtn">-</button>
+        </div>
+      </div>
+
+      <!--
+    ------------------------------------------------------------------ -->
+      <button type="submit" name="setAndWeight" class="largeBtn" id="addLargeBtn" value="<%= heading %>">+</button>
+
+    </div>
+  </form>
+
+  <!-- form
+--------------------------------------------------------------------------- -->
+
+
+
+
+  <div class="completed">
+    <h3>COMPLETED TODAY</h3>
+    <hr>
+    <div class="completedSets">
+    <% completed.forEach(function (set, index) { %>
+      <p> SET <%= index + 1 %>  <%= set.reps %> REPS @ <%= set.weight %> KG TOTAL <%= set.reps * set.weight %>  </p>
+    <% }) %>
+
+
+
+    </div>
+  </div>
+
+  <div class="total">
+    <h3>TOTAL</h3>
+    <hr>
+    <div class="completedTotal">
+    <%   const totalReps = completed.reduce((a, {reps}) => a + reps, 0) %>
+    <% let totalWeight = 0; %>
+    <% completed.forEach(function(set) { %>
+    <%  totalWeight = totalWeight + (set.reps *   set.weight); %>
+    <% }) %>
+      <p>REPS <%= totalReps %> </p>
+      <p>WEIGHT <%= totalWeight %> </p>
+    </div>
+  </div>
+
+</div>
+
+
+<%- include('partials/footer'); -%>

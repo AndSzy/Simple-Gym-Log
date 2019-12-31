@@ -1,0 +1,24 @@
+<%- include('partials/headerAdd'); -%>
+
+<div class="historyHeader">
+
+  <h2> <%= heading %> History</h2>
+  <hr>
+
+</div>
+
+<div class="historyStats">
+  <% let list = foundSets.map(a => a.exercise) %>
+  <% let clearedList = [...new Set(list)]   %>
+
+  <% foundSets.forEach(function (object) { %>
+    <% const when = new Date(object.date.getFullYear(), object.date.getMonth(), object.date.getDate()); %>
+    <% const options = {year: "numeric", month: "long", day: "numeric"} %>
+    <% const shortWhen = when.toLocaleDateString(options) %>
+    <p> <%= shortWhen %> Reps <%= object.reps %> @ <%= object.weight %> KG</p>
+  <% }) %>
+</div>
+
+
+
+<%- include('partials/footer'); -%>

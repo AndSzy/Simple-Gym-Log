@@ -1,0 +1,18 @@
+<%- include('partials/header'); -%>
+
+
+<div class="exercise">
+  <div class="exerciseList">
+    <% newExercises.forEach(function (exercise) { %>
+      <a href="exercise/<%= exercise.name %>" >
+        <%= exercise.name %>
+      </a>
+    <% }) %>
+
+  </div>
+  <button type="button" name="button" class="largeBtn" id="exerciseBtn">+</button>
+</div>
+
+
+
+<%- include('partials/footer'); -%>

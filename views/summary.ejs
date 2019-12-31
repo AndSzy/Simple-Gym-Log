@@ -1,0 +1,58 @@
+<%- include('partials/header'); -%>
+
+
+<div class="summaryHeader">
+  <h2>YOU LAST WORKED OUT</h2>
+  <% const timeFromLastWorkout = (today - lastDate) / 86400000 %>
+  <% if (timeFromLastWorkout === 0) { %>
+    <h2>TODAY</h2>
+  <% } else if (timeFromLastWorkout === 1) { %>
+    <h2>YESTERDAY</h2>
+  <% } else { %>
+    <h2> <%= timeFromLastWorkout  %> DAYS AGO </h2>
+  <% }; %>
+
+
+
+</div>
+
+<div class="stats">
+  <h3> STATS</h3>
+  <hr>
+
+  <% let list = summaryStats.map(a => a.exercise) %>
+  <% let clearedList = [...new Set(list)]   %>
+  <%   const totalReps = summaryStats.reduce((a, {reps}) => a + reps, 0) %>
+  <% let totalWeight = 0; %>
+  <% summaryStats.forEach(function(set) { %>
+  <%  totalWeight = totalWeight + (set.reps *   set.weight); %>
+  <% }) %>
+
+  <p> <%=clearedList.length %> EXERCISES COMPLETED</p>
+  <p> <%=list.length %> SETS COMPLETED</p>
+  <p> <%= totalReps %> REPS COMPLETED</p>
+  <p> <%= totalWeight %> KG TOTAL LIFTED</p>
+</div>
+
+<div class="details">
+  <h3> DETAILS</h3>
+  <hr>
+
+
+  <%clearedList.forEach(function(result) { %>
+    <h4> <%= result.toUpperCase() %> </h4>
+  <%  summaryStats.forEach(function(object) { %>
+  <%    if (object.exercise === result) { %>
+  <%  console.log(object.exercise); %>
+      <p> <%= object.reps %> REPS @ <%= object.weight %> KG </p>
+  <% }; %>
+  <%  }) %>
+
+
+
+  <% }) %>
+
+
+</div>
+
+<%- include('partials/footer'); -%>

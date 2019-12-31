@@ -1,0 +1,173 @@
+html, * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Header
+ **************************************************/
+header {
+  padding: 10px;
+  background: grey;
+  color: white;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.topRow h1 {
+  text-align: center;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: white;
+}
+
+.menu a:hover {
+  cursor: pointer;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* Summary
+ **************************************************/
+.summaryHeader {
+  text-align: center;
+  padding: 5vh 0;
+}
+
+.stats, .details {
+  padding: 10px;
+
+}
+
+.stats p  {
+  margin: 3vh 0;
+}
+
+.details p {
+  margin: 2vh 0;
+}
+
+.details hr {
+  margin-bottom: 2vh;
+}
+/* Exercise
+ **************************************************/
+
+.exerciseList a {
+  color: black;
+  margin: 3vh 5vw;
+  display: block;
+  font-size: 1.17em;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.exerciseList a:first-child {
+  margin-top: 10vh;
+}
+
+.largeBtn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 40px;
+  color: white;
+  background: grey;
+}
+
+#exerciseBtn {
+  position: absolute;
+  bottom: 2vh;
+  right: 2vw;
+}
+
+
+/* Add
+ **************************************************/
+.smallBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  font-size: 40px;
+  color: white;
+  background: grey;
+  margin-left: 5vw;
+  line-height: 30px;
+  text-align: center;
+}
+
+#addLargeBtn {
+  margin-right: 0;
+  margin-left: auto;
+  display: block;
+}
+
+.addTopRow, .addReps, .completed, .total {
+  padding: 10px;
+}
+
+.completed p, .total p {
+  margin: 3vh 2vw;
+}
+
+.addTopRow, .reps, .weight {
+  display: flex;
+  flex-direction: row;
+}
+
+.addTopRow {
+  justify-content: space-between;
+}
+
+.reps, .weight {
+  justify-content: center;
+}
+
+/* History
+ **************************************************/
+
+ .historyHeader {
+   text-align: center;
+   margin: 2vh 0;
+ }
+
+ .historyStats p {
+   margin: 3vh 2vw;
+ }
+
+ /* More
+  **************************************************/
+
+  .left, .right {
+    width: 40vw;
+  }
+
+  .calendar, .stopWatch, .bodyMass {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 5vh 0;
+  }
+
+  .left {
+    position: relative;
+  }
+
+  .left h2 {
+    position: absolute;
+    bottom: 0;
+  }
