@@ -1,18 +1,49 @@
 <%- include('partials/header'); -%>
 
 
-<div class="exercise">
+
   <div class="exerciseList">
-    <% newExercises.forEach(function (exercise) { %>
-      <a href="exercise/<%= exercise.name %>" >
-        <%= exercise.name %>
-      </a>
-    <% }) %>
+    <div class="exerciseAList">
+      <% newExercises.forEach(function (exercise) { %>
+            <a href="exercise/<%= exercise.name %>" >
+              <%= exercise.name %>
+            </a>
+      <% }) %>
+    </div>
+    <div class="editAndDelete">
+      <div class="exerciseBtnList">
+        <% newExercises.forEach(function (exercise) { %>
+              <button type="button" name="button" class="editBtn marginBtn" id="<%= exercise.name %>">Edit</button>
+        <% }) %>
+      </div>
+      <div class="deleteBtnList">
+        <% newExercises.forEach(function (exercise) { %>
+              <button type="button" name="button" class="deleteBtn" id="<%= exercise.name %>">Delete</button>
+        <% }) %>
+      </div>
+    </div>
 
   </div>
   <button type="button" name="button" class="largeBtn" id="exerciseBtn">+</button>
+
+
+<!-- Modal window
+------------------------------------------------------------------------------>
+
+<div class="modal" id="modal">
+  <div class="modal-header">
+    <div class="tittle" id="tittle">Add Exercise</div>
+    <button class="close-button" id="modalCloseBtn">&times;</button>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <form action="/exercise" method="post" >
+      <input type="text" name="exerciseName" placeholder="Exercise Name" required>
+      <button type="submit" name="button" class="smallBtn" id="modalPlus">+</button>
+    </form>
+  </div>
 </div>
+<div id="overlay"></div>
 
-
+<script type="text/javascript" src="/js/script-modal.js"></script>
 
 <%- include('partials/footer'); -%>

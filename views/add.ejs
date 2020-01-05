@@ -14,42 +14,30 @@
   </div>
   <hr>
 
-  <!-- form
---------------------------------------------------------------------------- -->
-  <form class="" action="<%= heading %>" method="post">
+
+  <form action="<%= heading %>" method="post">
     <div class="addReps">
       <div class="reps">
-        <!--
-      ---------------------------------------------------------------------->
-        <input type="number" name="newSet" placeholder="REPS">
+        <input type="number" name="newSet" placeholder="REPS" id="reps" min="1" required>
         <div class="buttons">
-          <button type="button" name="button" class="smallBtn">+</button>
-          <button type="button" name="button" class="smallBtn">-</button>
+          <button type="button" name="button" class="smallBtn" id="addReps">+</button>
+          <button type="button" name="button" class="smallBtn" id="subReps">-</button>
         </div>
       </div>
-
-      <!--
-    ------------------------------------------------------------------ -->
 
       <div class="weight">
-        <input type="number" name="newWeight" placeholder="WEIGHT">
+        <input type="number" name="newWeight" placeholder="WEIGHT" id="weight" min="5" required>
         <div class="buttons">
-          <button type="button" name="button" class="smallBtn">+</button>
-          <button type="button" name="button" class="smallBtn">-</button>
+          <button type="button" name="button" class="smallBtn" id="addWeight">+</button>
+          <button type="button" name="button" class="smallBtn" id="subWeight">-</button>
         </div>
       </div>
 
-      <!--
-    ------------------------------------------------------------------ -->
+
       <button type="submit" name="setAndWeight" class="largeBtn" id="addLargeBtn" value="<%= heading %>">+</button>
 
     </div>
   </form>
-
-  <!-- form
---------------------------------------------------------------------------- -->
-
-
 
 
   <div class="completed">
@@ -59,9 +47,6 @@
     <% completed.forEach(function (set, index) { %>
       <p> SET <%= index + 1 %>  <%= set.reps %> REPS @ <%= set.weight %> KG TOTAL <%= set.reps * set.weight %>  </p>
     <% }) %>
-
-
-
     </div>
   </div>
 
@@ -78,8 +63,8 @@
       <p>WEIGHT <%= totalWeight %> </p>
     </div>
   </div>
-
 </div>
 
+<script type="text/javascript" src="/js/script.js"></script>
 
 <%- include('partials/footer'); -%>

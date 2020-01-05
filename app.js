@@ -18,7 +18,7 @@ mongoose.connect('mongodb://localhost:27017/GymLogDB', {useNewUrlParser: true, u
 const now = new Date();
 const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-// CREATE EXERCISE LIST SCHEMA
+// Exercise Schema
 ///////////////////////////////////////////////////////
 
 const exercisesSchema = new mongoose.Schema({
@@ -35,10 +35,9 @@ const squat = new Exercise ({
   name: "Squat"
 });
 
-// benchPress.save();
-// squat.save();
+const defaultExercises = [benchPress, squat];
 
-// CREATE SET SCHEMA
+// Set Schema
 ///////////////////////////////////////////////////////
 
 const setsSchema = new mongoose.Schema({
@@ -51,14 +50,7 @@ const setsSchema = new mongoose.Schema({
 
 const Set = mongoose.model("Set", setsSchema);
 
-
-
-
-
-
 app.get("/", function (req, res) {
-  // ////////////////////////////////////////////////////////////////////
-
   const newestEntry = Set.findOne({}, {date: 1}, {sort: {"date" : -1}}, function (err, found) {if (err) {
     console.log(err);
     // RENDERING DATA IN CASE OF ERROR
@@ -71,10 +63,8 @@ app.get("/", function (req, res) {
   newestEntry.then(function(data) {
     const date = new Date(data.date);
     const lastDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    console.log(lastDate);
 
     const listOfNewest = Set.find({date: { $gte : lastDate}}, function(err, found) {
-      console.log(found);
       res.render('summary', {heading: "Summary", summaryStats: found, lastDate: lastDate, today: today});
     })
   })
@@ -83,18 +73,29 @@ app.get("/", function (req, res) {
 
 
 app.get("/exercise", function (req, res) {
+
   Exercise.find({}, function (err, foundExercises) {
-    res.render('exercise', {heading: "Exercise", newExercises : foundExercises});
+    if (foundExercises.length === 0) {
+
+      Exercise.insertMany(defaultExercises, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Items inserted to DB.");
+        };
+      });
+      res.redirect("/exercise");
+    } else {
+      res.render('exercise', {heading: "Exercise", newExercises : foundExercises});
+    }
   });
 });
-// CREATE CUSTOM ADDRESS
+// Custom address
 ///////////////////////////////////////////////////////
 
 app.get("/exercise/:customExerciseName", function (req,res) {
 
   const customExerciseName = req.params.customExerciseName;
-  console.log(customExerciseName);
-  const foundSets = "";
 
   Set.find({date: { $gte : today}, exercise: customExerciseName}, function(err, foundSets) {
     res.render('add', {heading: customExerciseName, completed: foundSets})
@@ -102,14 +103,13 @@ app.get("/exercise/:customExerciseName", function (req,res) {
 
 });
 
-// ADD SETS AND WEIGHT TO EXERCISE
+// Add sets and weight to setsSchema
 ///////////////////////////////////////////////////////
 
 app.post("/exercise/:customExerciseName", function (req, res) {
   const customExerciseName = req.params.customExerciseName;
   const reps = req.body.newSet;
   const weight = req.body.newWeight;
-  console.log(customExerciseName);
 
   const set = new Set ({
     reps: reps,
@@ -117,13 +117,73 @@ app.post("/exercise/:customExerciseName", function (req, res) {
     exercise: customExerciseName
   });
 
-  console.log(set);
-
   set.save();
 
   res.redirect("/exercise/" + customExerciseName)
 })
 
+
+
+
+
+// Add new exercise to sexecisesSchema
+///////////////////////////////////////////////////////
+app.post("/exercise", function (req, res) {
+  const name = req.body.exerciseName;
+
+  const exercise = new Exercise ({
+    name: name
+  });
+
+  exercise.save();
+
+  res.redirect("/exercise");
+
+})
+
+// Editing exercises
+///////////////////////////////////////////////////////
+
+app.post("/exercise/change/:customExerciseName", function (req, res) {
+  const customExerciseName = req.params.customExerciseName;
+  const newName = req.body.exerciseName;
+
+  Exercise.findOneAndUpdate({name: customExerciseName}, {name: newName}, {
+  new: true}, function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+  })
+
+  Set.updateMany({exercise: customExerciseName}, {exercise: newName}, function(err,doc) {
+    if (err) {
+      console.log(err);
+    }
+  })
+  res.redirect("/exercise");
+})
+
+
+// Deleting exercises
+///////////////////////////////////////////////////////
+app.post("/exercise/delete/:customExerciseName", function (req, res) {
+  const customExerciseName = req.params.customExerciseName;
+
+  Set.deleteMany({exercise: customExerciseName}, function(err, doc) {
+    if(err) {
+      console.log(err);
+    }
+  });
+
+  Exercise.deleteOne({name: customExerciseName}, function(err, doc) {
+    if(err) {
+      console.log(err);
+    }
+  });
+
+  res.redirect("/exercise");
+
+})
 
 
 app.get("/more", function (req, res) {
@@ -137,7 +197,6 @@ app.get("/exercise/:customExerciseName/history", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(foundSets);
       res.render('history', {heading: customExerciseName, foundSets: foundSets})
     }
   })

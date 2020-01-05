@@ -39,6 +39,14 @@ button:hover {
   cursor: pointer;
 }
 
+/* Header-edit
+ **************************************************/
+
+.menu-edit {
+  justify-content: flex-end;
+}
+
+
 /* Summary
  **************************************************/
 .summaryHeader {
@@ -64,6 +72,10 @@ button:hover {
 }
 /* Exercise
  **************************************************/
+.exerciseList {
+  display: flex;
+  justify-content: space-between;
+}
 
 .exerciseList a {
   color: black;
@@ -74,9 +86,24 @@ button:hover {
   text-decoration: none;
 }
 
-.exerciseList a:first-child {
+.editAndDelete {
+  display: flex;
+}
+
+
+.editBtn, .deleteBtn {
+  display: block;
+  margin: 3vh 5vw;
+  font-size: 1.17em;
+  cursor: pointer;
+}
+
+
+
+.exerciseList a:first-child, .exerciseList .editBtn:first-child, .exerciseList .deleteBtn:first-child {
   margin-top: 10vh;
 }
+
 
 .largeBtn {
   width: 60px;
@@ -88,10 +115,93 @@ button:hover {
   background: grey;
 }
 
+
+
 #exerciseBtn {
   position: absolute;
   bottom: 2vh;
   right: 2vw;
+}
+
+
+
+
+/* Exercise - modal
+ **************************************************/
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 500px;
+  max-width: 80vw;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.modal-header .tittle {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-header .close-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 10px 15px;
+}
+
+.modal-body form {
+  display: flex;
+}
+
+.modal-body input {
+  font-size: 1.1rem;
+}
+
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  transition: 200ms ease-in-out;
+}
+
+#overlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+#deleteBtn {
+  margin: 3vh 0;
+  padding: 2px 5vw;
+  font-size: 1.1rem;
 }
 
 
@@ -135,6 +245,7 @@ button:hover {
 
 .reps, .weight {
   justify-content: center;
+  margin: 1vh 0;
 }
 
 /* History
@@ -171,3 +282,21 @@ button:hover {
     position: absolute;
     bottom: 0;
   }
+
+  /* Edit
+   **************************************************/
+.containerEdit {
+  text-align: center;
+}
+
+.containerEdit h2, .containerEdit form  {
+  margin: 3vh 2vw;
+}
+
+.containerEdit input, .containerEdit button {
+  font-size: 1.1rem;
+}
+
+.containerEdit button {
+  padding: 2px 7px;
+}
