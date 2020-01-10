@@ -43,7 +43,6 @@
     <h4> <%= result.toUpperCase() %> </h4>
   <%  summaryStats.forEach(function(object) { %>
   <%    if (object.exercise === result) { %>
-  <%  console.log(object.exercise); %>
       <p> <%= object.reps %> REPS @ <%= object.weight %> KG </p>
   <% }; %>
   <%  }) %>

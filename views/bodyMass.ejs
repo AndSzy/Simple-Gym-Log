@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://kit.fontawesome.com/88e3276c80.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Gym Log</title>
+</head>
+<body>
+  <header>
+    <div class="topRow">
+      <h1>
+        <%= heading %>
+
+      </h1>
+    </div>
+    <div class="menu">
+      <a href="/">SUMMARY</a>
+      <a href="/exercise">EXERCISE</a>
+      <a href="/more">MORE</a>
+    </div>
+  </header>
+
+  <div class="addTopRow">
+
+  <%  const now = new Date(); %>
+  <%  const options = {year: "numeric", month: "long", day: "numeric"}; %>
+  <%  const todaysDate = now.toLocaleDateString('en-GB', options); %>
+
+
+    <p> <%= todaysDate %> </p>
+
+    <p> <%= now.getHours() %>:<%= now.getMinutes() %>  </p>
+  </div>
+  <hr>
+
+
+  <form action="bodymass" method="post">
+    <div class="addReps">
+      <div class="reps">
+        <input type="number" name="bodyMass" placeholder="BODY WEIGHT" id="bodyMass" min="1" required>
+        <div class="buttons">
+          <button type="button" name="button" class="smallBtn" id="addMass">+</button>
+          <button type="button" name="button" class="smallBtn" id="subMass">-</button>
+        </div>
+      </div>
+
+      <button type="submit" name="bodyMassBtn" class="largeBtn" id="addLargeBtn" value="<%= heading %>">+</button>
+
+    </div>
+  </form>
+  <hr>
+
+  <!-- Chart
+-------------------------------------------------------->
+  <div class="container">
+    <canvas id="myChart"></canvas>
+  </div>
+
+
+  <!-- Skript
+-------------------------------------------------------->
+
+  <script>
+
+
+
+  // Form
+  //////////////////////////////////////////////////////
+  const mass = document.getElementById("bodyMass");
+  const addMassBtn = document.getElementById("addMass");
+  const subMassBtn = document.getElementById("subMass");
+
+  addMassBtn.addEventListener('click',function (event) {
+    mass.value = (parseInt(mass.value,10) + 1) || 0;
+  });
+
+  subMassBtn.addEventListener('click',function (event) {
+    mass.value = (parseInt(mass.value,10) - 1) || 0;
+  });
+
+  // Chart
+  //////////////////////////////////////////////////////
+
+  let bodyMassDataString = "<%= bodyMassData %>";
+
+  let bodyMassDataArray = bodyMassDataString.split(",");
+
+  let dateOfbodyMassDataString = "<%= arrayOfDates %>";
+
+  console.log(dateOfbodyMassDataString);
+  console.log(typeof(dateOfbodyMassDataString))
+
+  let dateOfbodyMassDataArray = dateOfbodyMassDataString.split(",");
+
+  let shortDateOfbodyMassDataArray = [];
+
+  dateOfbodyMassDataArray.forEach(function (obj) {
+    shortDateOfbodyMassDataArray.push(obj.slice(3, 15))
+  })
+
+    let myChart = document.getElementById('myChart').getContext('2d');
+
+    let weightChart = new Chart(myChart, {
+      //type of chart
+      type: 'line',
+
+
+      //the data
+      data: {
+        labels: shortDateOfbodyMassDataArray,
+        datasets: [ {
+          label: 'Body Mass',
+          data: bodyMassDataArray
+        }]
+      },
+
+      //options here
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

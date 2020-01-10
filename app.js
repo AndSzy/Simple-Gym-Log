@@ -50,6 +50,32 @@ const setsSchema = new mongoose.Schema({
 
 const Set = mongoose.model("Set", setsSchema);
 
+
+// Body Mass Schema
+///////////////////////////////////////////////////////
+
+const bodyMassSchema = new mongoose.Schema({
+  weight: Number,
+  date: {type: Date, default: Date.now}
+});
+
+const BodyMass = mongoose.model("BodyMass", bodyMassSchema);
+
+const bodyMass1 = new BodyMass ({
+  weight: 77,
+  date: '1995-12-17T03:24:00'
+});
+
+const bodyMass2 = new BodyMass ({
+  weight: 88,
+});
+
+
+
+// Summary
+///////////////////////////////////////////////////////
+
+
 app.get("/", function (req, res) {
   const newestEntry = Set.findOne({}, {date: 1}, {sort: {"date" : -1}}, function (err, found) {if (err) {
     console.log(err);
@@ -126,7 +152,7 @@ app.post("/exercise/:customExerciseName", function (req, res) {
 
 
 
-// Add new exercise to sexecisesSchema
+// Add new exercise to exercisesSchema
 ///////////////////////////////////////////////////////
 app.post("/exercise", function (req, res) {
   const name = req.body.exerciseName;
@@ -186,9 +212,60 @@ app.post("/exercise/delete/:customExerciseName", function (req, res) {
 })
 
 
+// More
+///////////////////////////////////////////////////////
+
 app.get("/more", function (req, res) {
   res.render('more', {heading: "More"});
 });
+
+// More - body mass
+///////////////////////////////////////////////////////
+
+app.get("/more/bodymass", function (req, res) {
+
+// Add Find Schema and render
+
+BodyMass.find({}, function (err, found){
+  let arrayOfBodyMasses =[];
+  let arrayOfDates = [];
+  found.forEach(function(obj) {
+    arrayOfBodyMasses.push(obj.weight);
+
+   // let dateString = obj.date.toString()
+   //  let arrayWithshortDate = dateString.split("T");
+   //  let shortDate = arrayWithshortDate[0];
+    arrayOfDates.push(obj.date.toString());
+
+
+
+  })
+  console.log(arrayOfDates);
+  res.render('bodymass', {heading: "Body Mass", bodyMassData: arrayOfBodyMasses,
+arrayOfDates: arrayOfDates});
+  })
+});
+
+
+app.post("/more/bodymass", function (req, res) {
+
+  const bodyMass = req.body.bodyMass;
+  
+  // Add bodyMass to Schema
+  const newBodyMassEntry = new  BodyMass({
+    weight: bodyMass
+  });
+
+  newBodyMassEntry.save();
+
+
+  console.log(bodyMass);
+
+  res.redirect("/more/bodymass");
+
+})
+
+
 
 
 app.get("/exercise/:customExerciseName/history", function (req, res) {
