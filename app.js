@@ -51,25 +51,15 @@ const setsSchema = new mongoose.Schema({
 const Set = mongoose.model("Set", setsSchema);
 
 
-// Body Mass Schema
+// Body Weight Schema
 ///////////////////////////////////////////////////////
 
-const bodyMassSchema = new mongoose.Schema({
+const bodyWeightSchema = new mongoose.Schema({
   weight: Number,
   date: {type: Date, default: Date.now}
 });
 
-const BodyMass = mongoose.model("BodyMass", bodyMassSchema);
-
-const bodyMass1 = new BodyMass ({
-  weight: 77,
-  date: '1995-12-17T03:24:00'
-});
-
-const bodyMass2 = new BodyMass ({
-  weight: 88,
-});
-
+const BodyWeight = mongoose.model("BodyWeight", bodyWeightSchema);
 
 
 // Summary
@@ -77,21 +67,23 @@ const bodyMass2 = new BodyMass ({
 
 
 app.get("/", function (req, res) {
-  const newestEntry = Set.findOne({}, {date: 1}, {sort: {"date" : -1}}, function (err, found) {if (err) {
+  const newestEntryInSetsCollection = Set.findOne({}, {date: 1}, {sort: {"date" : -1}}, function (err, found) {if (err) {
     console.log(err);
-    // RENDERING DATA IN CASE OF ERROR
-    res.render('summary', {heading: "Summary", summaryStats: 1});
+    // RENDERING DATA IN CASE OF ERROR   !!!
+    /////////////////////////////////////////////////////////////////////////
+    res.render('summary', {heading: "Summary", found: 1});
   } else {
     return found
   }
   });
 
-  newestEntry.then(function(data) {
-    const date = new Date(data.date);
-    const lastDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  newestEntryInSetsCollection.then(function(data) {
+    const lastFoundDate = new Date(data.date);
+    const lastFoundDateShort = new Date(lastFoundDate.getFullYear(), lastFoundDate.getMonth(), lastFoundDate.getDate());
 
-    const listOfNewest = Set.find({date: { $gte : lastDate}}, function(err, found) {
-      res.render('summary', {heading: "Summary", summaryStats: found, lastDate: lastDate, today: today});
+
+    const listOfNewest = Set.find({date: { $gte : lastFoundDateShort}}, function(err, found) {
+      res.render('summary', {heading: "Summary", found: found, lastFoundDateShort: lastFoundDateShort, today: today});
     })
   })
 });
@@ -219,49 +211,40 @@ app.get("/more", function (req, res) {
   res.render('more', {heading: "More"});
 });
 
-// More - body mass
+// More - body weight
 ///////////////////////////////////////////////////////
 
-app.get("/more/bodymass", function (req, res) {
+app.get("/more/bodyweight", function (req, res) {
 
 // Add Find Schema and render
 
-BodyMass.find({}, function (err, found){
-  let arrayOfBodyMasses =[];
+BodyWeight.find({}, function (err, found){
+  let arrayOfBodyWeights =[];
   let arrayOfDates = [];
   found.forEach(function(obj) {
-    arrayOfBodyMasses.push(obj.weight);
-
-   // let dateString = obj.date.toString()
-   //  let arrayWithshortDate = dateString.split("T");
-   //  let shortDate = arrayWithshortDate[0];
+    arrayOfBodyWeights.push(obj.weight);
     arrayOfDates.push(obj.date.toString());
-
-
 
   })
   console.log(arrayOfDates);
-  res.render('bodymass', {heading: "Body Mass", bodyMassData: arrayOfBodyMasses,
+  res.render('bodyweight', {heading: "Body Weight", bodyWeightData: arrayOfBodyWeights,
 arrayOfDates: arrayOfDates});
   })
 });
 
 
-app.post("/more/bodymass", function (req, res) {
+app.post("/more/bodyweight", function (req, res) {
 
-  const bodyMass = req.body.bodyMass;
-  
-  // Add bodyMass to Schema
-  const newBodyMassEntry = new  BodyMass({
-    weight: bodyMass
+  const bodyWeight = req.body.bodyWeight;
+
+  // Add bodyWeight to Schema
+  const newBodyWeightEntry = new  BodyWeight({
+    weight: bodyWeight
   });
 
-  newBodyMassEntry.save();
+  newBodyWeightEntry.save();
 
-
-  console.log(bodyMass);
-
-  res.redirect("/more/bodymass");
+  res.redirect("/more/bodyweight");
 
 })
 

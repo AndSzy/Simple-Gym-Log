@@ -38,17 +38,17 @@
   <hr>
 
 
-  <form action="bodymass" method="post">
+  <form action="bodyweight" method="post">
     <div class="addReps">
       <div class="reps">
-        <input type="number" name="bodyMass" placeholder="BODY WEIGHT" id="bodyMass" min="1" required>
+        <input type="number" name="bodyWeight" placeholder="BODY WEIGHT" id="bodyWeight" min="1" required>
         <div class="buttons">
-          <button type="button" name="button" class="smallBtn" id="addMass">+</button>
-          <button type="button" name="button" class="smallBtn" id="subMass">-</button>
+          <button type="button" name="button" class="smallBtn" id="addWeight">+</button>
+          <button type="button" name="button" class="smallBtn" id="subWeight">-</button>
         </div>
       </div>
 
-      <button type="submit" name="bodyMassBtn" class="largeBtn" id="addLargeBtn" value="<%= heading %>">+</button>
+      <button type="submit" name="bodyWeightBtn" class="largeBtn" id="addLargeBtn" value="<%= heading %>">+</button>
 
     </div>
   </form>
@@ -61,45 +61,43 @@
   </div>
 
 
-  <!-- Skript
+  <!-- Script
 -------------------------------------------------------->
 
   <script>
 
-
-
   // Form
   //////////////////////////////////////////////////////
-  const mass = document.getElementById("bodyMass");
-  const addMassBtn = document.getElementById("addMass");
-  const subMassBtn = document.getElementById("subMass");
+  const weight = document.getElementById("bodyWeight");
+  const addWeightBtn = document.getElementById("addWeight");
+  const subWeightBtn = document.getElementById("subWeight");
 
-  addMassBtn.addEventListener('click',function (event) {
-    mass.value = (parseInt(mass.value,10) + 1) || 0;
+  addWeightBtn.addEventListener('click',function (event) {
+    weight.value = (parseInt(weight.value,10) + 1) || 0;
   });
 
-  subMassBtn.addEventListener('click',function (event) {
-    mass.value = (parseInt(mass.value,10) - 1) || 0;
+  subWeightBtn.addEventListener('click',function (event) {
+    weight.value = (parseInt(weight.value,10) - 1) || 0;
   });
 
   // Chart
   //////////////////////////////////////////////////////
 
-  let bodyMassDataString = "<%= bodyMassData %>";
+  let bodyWeightDataString = "<%= bodyWeightData %>";
 
-  let bodyMassDataArray = bodyMassDataString.split(",");
+  let bodyWeightDataArray = bodyWeightDataString.split(",");
 
-  let dateOfbodyMassDataString = "<%= arrayOfDates %>";
+  let dateOfbodyWeightDataString = "<%= arrayOfDates %>";
 
-  console.log(dateOfbodyMassDataString);
-  console.log(typeof(dateOfbodyMassDataString))
+  console.log(dateOfbodyWeightDataString);
+  console.log(typeof(dateOfbodyWeightDataString))
 
-  let dateOfbodyMassDataArray = dateOfbodyMassDataString.split(",");
+  let dateOfbodyWeightDataArray = dateOfbodyWeightDataString.split(",");
 
-  let shortDateOfbodyMassDataArray = [];
+  let shortDateOfbodyWeightDataArray = [];
 
-  dateOfbodyMassDataArray.forEach(function (obj) {
-    shortDateOfbodyMassDataArray.push(obj.slice(3, 15))
+  dateOfbodyWeightDataArray.forEach(function (obj) {
+    shortDateOfbodyWeightDataArray.push(obj.slice(3, 15))
   })
 
     let myChart = document.getElementById('myChart').getContext('2d');
@@ -108,13 +106,12 @@
       //type of chart
       type: 'line',
 
-
       //the data
       data: {
-        labels: shortDateOfbodyMassDataArray,
+        labels: shortDateOfbodyWeightDataArray,
         datasets: [ {
-          label: 'Body Mass',
-          data: bodyMassDataArray
+          label: 'Body Weight',
+          data: bodyWeightDataArray
         }]
       },
 

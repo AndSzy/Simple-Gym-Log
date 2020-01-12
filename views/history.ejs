@@ -8,14 +8,14 @@
 </div>
 
 <div class="historyStats">
-  <% let list = foundSets.map(a => a.exercise) %>
-  <% let clearedList = [...new Set(list)]   %>
+  <!-- <% let listOfSets = foundSets.map(a => a.exercise) %>
+  <% let clearedList = [...new Set(listOfSets)]   %> -->
 
   <% foundSets.forEach(function (object) { %>
-    <% const when = new Date(object.date.getFullYear(), object.date.getMonth(), object.date.getDate()); %>
+    <% const timeStamp = new Date(object.date.getFullYear(), object.date.getMonth(), object.date.getDate()); %>
     <% const options = {year: "numeric", month: "long", day: "numeric"} %>
-    <% const shortWhen = when.toLocaleDateString(options) %>
-    <p> <%= shortWhen %> Reps <%= object.reps %> @ <%= object.weight %> KG</p>
+    <% const shortTimeStamp = timeStamp.toLocaleDateString(options) %>
+    <p> <%= shortTimeStamp %> Reps <%= object.reps %> @ <%= object.weight %> KG</p>
   <% }) %>
 </div>
 

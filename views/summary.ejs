@@ -3,7 +3,8 @@
 
 <div class="summaryHeader">
   <h2>YOU LAST WORKED OUT</h2>
-  <% const timeFromLastWorkout = (today - lastDate) / 86400000 %>
+  <% const dayInMilliseconds = 86400000 %>
+  <% const timeFromLastWorkout = (today - lastFoundDateShort) / dayInMilliseconds %>
   <% if (timeFromLastWorkout === 0) { %>
     <h2>TODAY</h2>
   <% } else if (timeFromLastWorkout === 1) { %>
@@ -12,37 +13,35 @@
     <h2> <%= timeFromLastWorkout  %> DAYS AGO </h2>
   <% }; %>
 
-
-
 </div>
 
-<div class="stats">
+<div class="summaryStats">
   <h3> STATS</h3>
   <hr>
 
-  <% let list = summaryStats.map(a => a.exercise) %>
-  <% let clearedList = [...new Set(list)]   %>
-  <%   const totalReps = summaryStats.reduce((a, {reps}) => a + reps, 0) %>
+  <% let listOfExercises = found.map(a => a.exercise) %>
+  <% let clearedListOfExercises = [...new Set(listOfExercises)]   %>
+  <% const totalReps = found.reduce((a, {reps}) => a + reps, 0) %>
   <% let totalWeight = 0; %>
-  <% summaryStats.forEach(function(set) { %>
+  <% found.forEach(function(set) { %>
   <%  totalWeight = totalWeight + (set.reps *   set.weight); %>
   <% }) %>
 
-  <p> <%=clearedList.length %> EXERCISES COMPLETED</p>
-  <p> <%=list.length %> SETS COMPLETED</p>
+  <p> <%=clearedListOfExercises.length %> EXERCISES COMPLETED</p>
+  <p> <%=listOfExercises.length %> SETS COMPLETED</p>
   <p> <%= totalReps %> REPS COMPLETED</p>
   <p> <%= totalWeight %> KG TOTAL LIFTED</p>
 </div>
 
-<div class="details">
+<div class="summaryDetails">
   <h3> DETAILS</h3>
   <hr>
 
 
-  <%clearedList.forEach(function(result) { %>
-    <h4> <%= result.toUpperCase() %> </h4>
-  <%  summaryStats.forEach(function(object) { %>
-  <%    if (object.exercise === result) { %>
+  <%clearedListOfExercises.forEach(function(exercise) { %>
+    <h4> <%= exercise.toUpperCase() %> </h4>
+  <%  found.forEach(function(object) { %>
+  <%    if (object.exercise === exercise) { %>
       <p> <%= object.reps %> REPS @ <%= object.weight %> KG </p>
   <% }; %>
   <%  }) %>

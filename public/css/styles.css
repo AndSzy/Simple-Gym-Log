@@ -35,16 +35,6 @@ header {
   cursor: pointer;
 }
 
-button:hover {
-  cursor: pointer;
-}
-
-/* Header-edit
- **************************************************/
-
-.menu-edit {
-  justify-content: flex-end;
-}
 
 
 /* Summary
@@ -54,30 +44,30 @@ button:hover {
   padding: 5vh 0;
 }
 
-.stats, .details {
+.summaryStats, .summaryDetails {
   padding: 10px;
 
 }
 
-.stats p  {
+.summaryStats p  {
   margin: 3vh 0;
 }
 
-.details p {
+.summaryDetails p {
   margin: 2vh 0;
 }
 
-.details hr {
+.summaryDetails hr {
   margin-bottom: 2vh;
 }
 /* Exercise
  **************************************************/
-.exerciseList {
+.exerciseContainer {
   display: flex;
   justify-content: space-between;
 }
 
-.exerciseList a {
+.exerciseContainer a {
   color: black;
   margin: 3vh 5vw;
   display: block;
@@ -86,7 +76,7 @@ button:hover {
   text-decoration: none;
 }
 
-.editAndDelete {
+.exerciseButtons {
   display: flex;
 }
 
@@ -100,7 +90,7 @@ button:hover {
 
 
 
-.exerciseList a:first-child, .exerciseList .editBtn:first-child, .exerciseList .deleteBtn:first-child {
+.exerciseContainer a:first-child, .exerciseContainer .editBtn:first-child, .exerciseContainer .deleteBtn:first-child {
   margin-top: 10vh;
 }
 
@@ -146,7 +136,7 @@ button:hover {
   transform: translate(-50%, -50%) scale(1);
 }
 
-.modal-header {
+.modalHeader {
   padding: 10px 15px;
   display: flex;
   justify-content: space-between;
@@ -154,12 +144,12 @@ button:hover {
   border-bottom: 1px solid black;
 }
 
-.modal-header .tittle {
+.modalHeader .tittle {
   font-size: 1.25rem;
   font-weight: bold;
 }
 
-.modal-header .close-button {
+.modalHeader .closeButton {
   cursor: pointer;
   border: none;
   outline: none;
@@ -168,15 +158,15 @@ button:hover {
   font-weight: bold;
 }
 
-.modal-body {
+.modalBody {
   padding: 10px 15px;
 }
 
-.modal-body form {
+.modalBody form {
   display: flex;
 }
 
-.modal-body input {
+.modalBody input {
   font-size: 1.1rem;
 }
 
@@ -267,7 +257,7 @@ button:hover {
     width: 40vw;
   }
 
-  .calendar, .stopWatch, .bodyMass {
+  .calendar, .stopWatch, .bodyWeight {
     display: flex;
     flex-direction: row;
     justify-content: space-around;

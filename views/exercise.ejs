@@ -2,21 +2,21 @@
 
 
 
-  <div class="exerciseList">
-    <div class="exerciseAList">
+  <div class="exerciseContainer">
+    <div class="exercisesList">
       <% newExercises.forEach(function (exercise) { %>
             <a href="exercise/<%= exercise.name %>" >
               <%= exercise.name %>
             </a>
       <% }) %>
     </div>
-    <div class="editAndDelete">
-      <div class="exerciseBtnList">
+    <div class="exerciseButtons">
+      <div class="editButtons">
         <% newExercises.forEach(function (exercise) { %>
-              <button type="button" name="button" class="editBtn marginBtn" id="<%= exercise.name %>">Edit</button>
+              <button type="button" name="button" class="editBtn " id="<%= exercise.name %>">Edit</button>
         <% }) %>
       </div>
-      <div class="deleteBtnList">
+      <div class="deleteButtons">
         <% newExercises.forEach(function (exercise) { %>
               <button type="button" name="button" class="deleteBtn" id="<%= exercise.name %>">Delete</button>
         <% }) %>
@@ -31,11 +31,11 @@
 ------------------------------------------------------------------------------>
 
 <div class="modal" id="modal">
-  <div class="modal-header">
+  <div class="modalHeader">
     <div class="tittle" id="tittle">Add Exercise</div>
-    <button class="close-button" id="modalCloseBtn">&times;</button>
+    <button class="closeButton" id="modalCloseBtn">&times;</button>
   </div>
-  <div class="modal-body" id="modal-body">
+  <div class="modalBody" id="modalBody">
     <form action="/exercise" method="post" >
       <input type="text" name="exerciseName" placeholder="Exercise Name" required>
       <button type="submit" name="button" class="smallBtn" id="modalPlus">+</button>
