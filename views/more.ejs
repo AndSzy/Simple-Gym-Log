@@ -10,12 +10,12 @@
       <button type="button" name="button" class="largeBtn" id="calendar"><i class="far fa-calendar-alt"></i></button>
     </div>
   </div>
-  <div class="stopWatch">
+  <div class="timer">
     <div class="left">
-      <h2>Stop Watch</h2>
+      <h2>Timer</h2>
     </div>
     <div class="right">
-      <button type="button" name="button" class="largeBtn" id="stopWatch"><i class="fas fa-stopwatch"></i></button>
+      <button type="button" name="button" class="largeBtn" id="timer"><i class="fas fa-stopwatch"></i></button>
     </div>
   </div>
 
@@ -29,10 +29,24 @@
   </div>
 
   <script>
+
+    let calendar = document.getElementById('calendar');
+    calendar.addEventListener('click', function () {
+      window.open("/more/calendar", "_self");
+    });
+
+
+    let timer = document.getElementById('timer');
+    timer.addEventListener('click', function () {
+      window.open("/more/timer", "_self");
+    });
+
     let bodyWeight = document.getElementById('bodyWeight');
     bodyWeight.addEventListener('click', function () {
       window.open("/more/bodyweight", "_self");
-    })
+    });
+
+
   </script>
 
 </div>

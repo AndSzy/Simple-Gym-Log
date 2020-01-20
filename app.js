@@ -159,6 +159,8 @@ app.post("/exercise", function (req, res) {
 
 })
 
+
+
 // Editing exercises
 ///////////////////////////////////////////////////////
 
@@ -247,6 +249,23 @@ app.post("/more/bodyweight", function (req, res) {
   res.redirect("/more/bodyweight");
 
 })
+
+
+// More - calendar
+///////////////////////////////////////////////////////
+
+app.get("/more/calendar", function (req, res) {
+  res.render("calendar", {heading: "Calendar"});
+})
+
+
+// More - timer
+///////////////////////////////////////////////////////
+
+app.get("/more/timer", function (req, res) {
+  res.render("timer", {heading: "Timer"});
+})
+
 
 
 

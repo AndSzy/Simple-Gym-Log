@@ -105,6 +105,10 @@ header {
   background: grey;
 }
 
+.largeBtn:hover {
+  cursor: pointer;
+}
+
 
 
 #exerciseBtn {
@@ -210,6 +214,10 @@ header {
   text-align: center;
 }
 
+.smallBtn:hover {
+  cursor: pointer;
+}
+
 #addLargeBtn {
   margin-right: 0;
   margin-left: auto;
@@ -257,7 +265,7 @@ header {
     width: 40vw;
   }
 
-  .calendar, .stopWatch, .bodyWeight {
+  .calendar, .timer, .bodyWeight {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -290,3 +298,27 @@ header {
 .containerEdit button {
   padding: 2px 7px;
 }
+
+/* Timer
+ **************************************************/
+ .timerContainer {
+   display: flex;
+   justify-content: space-around;
+   margin: 20vh auto;
+   margin-bottom: 10vh;
+   max-width: 800px;
+ }
+
+ .seconds, .minutes, .hours {
+   text-align: center;
+ }
+ .timerButtons {
+   display: flex;
+   justify-content: space-around;
+   margin: 2vh auto;
+   max-width: 800px;
+ }
+
+ .timerButton {
+   margin: 3vh 0;
+ }

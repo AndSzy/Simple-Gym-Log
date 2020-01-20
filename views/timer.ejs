@@ -1,0 +1,33 @@
+<%- include('partials/header'); -%>
+
+<div class="timerContainer">
+    <div class="hours">
+      <button class="timerButton plusButton smallBtn" id="addHour">+</button>
+      <h2 id="hours">0</h2>
+      <p>h</p>
+      <button class="timerButton minusButton smallBtn" id="removeHour">-</button>
+    </div>
+    <div class="minutes">
+      <button class="timerButton plusButton smallBtn" id="addMinute">+</button>
+      <h2 id="minutes">0</h2>
+      <p>min</p>
+      <button class="timerButton minusButton smallBtn" id="removeMinute">-</button>
+    </div>
+    <div class="seconds">
+      <button class="timerButton plusButton smallBtn" id="addSecond">+</button>
+      <h2 id="seconds">0</h2>
+      <p>s</p>
+      <button class="timerButton minusButton smallBtn" id="removeSecond">-</button>
+    </div>
+  </div>
+  <div class="timerButtons">
+    <button class="largeBtn" id="startButton"><i class="fas fa-play"></i></button>
+    <button class="largeBtn" id="stopButton"><i class="fas fa-stop"></i></button>
+    <button class="largeBtn" id="resetButton"><i class="fas fa-redo"></i></button>
+  </div>
+
+  <script src="/js/script-timer.js"></script>
+
+
+
+<%- include('partials/footer'); -%>
