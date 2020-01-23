@@ -121,6 +121,29 @@ app.get("/exercise/:customExerciseName", function (req,res) {
 
 });
 
+// Calendar - chosen date
+///////////////////////////////////////////////////////
+
+app.get("/more/calendar/:customDate", function (req, res) {
+  const customDate = req.params.customDate;
+
+  const customDateObject = new Date(customDate);
+
+  const customDatePlusOne = new Date(customDate);
+
+  customDatePlusOne.setDate(customDatePlusOne.getDate() + 1);
+
+  const customDateInShortFormat = customDateObject.getFullYear() +"/" + (customDateObject.getMonth() +1 ) +"/" + customDateObject.getDate();
+
+
+  Set.find({ $and: [{date: { $gte: customDate} }, {date: { $lt: customDatePlusOne}}]},function(err, found) {
+    res.render('calendarSummary', {heading: "Summary", customDate: customDateInShortFormat, found: found});
+  })
+
+})
+
+
+
 // Add sets and weight to setsSchema
 ///////////////////////////////////////////////////////
 
@@ -228,7 +251,7 @@ BodyWeight.find({}, function (err, found){
     arrayOfDates.push(obj.date.toString());
 
   })
-  console.log(arrayOfDates);
+
   res.render('bodyweight', {heading: "Body Weight", bodyWeightData: arrayOfBodyWeights,
 arrayOfDates: arrayOfDates});
   })
@@ -255,7 +278,24 @@ app.post("/more/bodyweight", function (req, res) {
 ///////////////////////////////////////////////////////
 
 app.get("/more/calendar", function (req, res) {
-  res.render("calendar", {heading: "Calendar"});
+  Set.find ({}, function(err, found) {
+    if (err) {
+      console.log(err);
+    }
+    let arrayOfDates = [];
+
+    found.forEach(function (item) {
+    let itemCreationDate = new Date (item.date.getFullYear(), item.date.getMonth(), item.date.getDate());
+
+    arrayOfDates.push(itemCreationDate.toString());
+  })
+
+  const arrayOfUniqueDates = arrayOfDates.filter(function (element, index, array) {
+    return !index || element != array[index -1]
+  })
+
+    res.render("calendar", {heading: "Calendar", arrayOfUniqueDates: arrayOfUniqueDates});
+  })
 })
 
 

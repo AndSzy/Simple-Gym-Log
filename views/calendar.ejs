@@ -1,7 +1,29 @@
 <%- include('partials/header'); -%>
 
-<h1>calendar</h1>
+<div class="calendarWrapper" id="daysOfWeek">
 
+    <div class="calendarTitle">
+      <button class="smallBtn" id="leftButton"> < </button>
+      <div id="monthAndYear">January 2020</div>
+      <button class="smallBtn" id="rightButton"> > </button>
+    </div>
+    <div>Sun</div>
+    <div>Mon</div>
+    <div>Tue</div>
+    <div>Wed</div>
+    <div>Thu</div>
+    <div>Fri</div>
+    <div>Sat</div>
+  </div>
+  <div class="calendarWrapper" id="calendarWrapper">
 
+  </div>
+
+  <script>
+
+    const arrayOfUniqueDates = "<%= arrayOfUniqueDates  %>".split(",")
+    
+  </script>
+  <script src="/js/script-calendar.js" type="text/jscript"></script>
 
 <%- include('partials/footer'); -%>

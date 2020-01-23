@@ -1,0 +1,51 @@
+<%- include('partials/header'); -%>
+
+
+<div class="summaryHeader">
+  <h2>YOUR WORKOUT FROM</h2>
+  <h2> <%= customDate %> </h2>
+
+
+</div>
+
+<div class="summaryStats">
+  <h3> STATS</h3>
+  <hr>
+
+  <% let listOfExercises = found.map(a => a.exercise) %>
+  <% let clearedListOfExercises = [...new Set(listOfExercises)]   %>
+  <% const totalReps = found.reduce((a, {reps}) => a + reps, 0) %>
+  <% let totalWeight = 0; %>
+  <% found.forEach(function(set) { %>
+  <%  totalWeight = totalWeight + (set.reps *   set.weight); %>
+  <% }) %>
+
+  <p> <%=clearedListOfExercises.length %> EXERCISES COMPLETED</p>
+  <p> <%=listOfExercises.length %> SETS COMPLETED</p>
+  <p> <%= totalReps %> REPS COMPLETED</p>
+  <p> <%= totalWeight %> KG TOTAL LIFTED</p>
+
+</div>
+
+<div class="summaryDetails">
+  <h3> DETAILS</h3>
+  <hr>
+
+  <%clearedListOfExercises.forEach(function(exercise) { %>
+    <h4> <%= exercise.toUpperCase() %> </h4>
+  <%  found.forEach(function(object) { %>
+  <%    if (object.exercise === exercise) { %>
+      <p> <%= object.reps %> REPS @ <%= object.weight %> KG </p>
+  <% }; %>
+  <%  }) %>
+
+
+
+  <% }) %>
+
+
+
+
+</div>
+
+<%- include('partials/footer'); -%>
