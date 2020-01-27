@@ -10,7 +10,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.set('view engine', 'ejs');
 
-mongoose.connect('mongodb://localhost:27017/GymLogDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
+
+mongoose.connect('mongodb+srv://admin-AndSzy:test123@cluster0-daukk.mongodb.net/GymLogDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
+//mongodb://localhost:27017
+
+
 
 // Date and Time
 ///////////////////////////////////////////////////////
@@ -69,13 +75,23 @@ const BodyWeight = mongoose.model("BodyWeight", bodyWeightSchema);
 app.get("/", function (req, res) {
   const newestEntryInSetsCollection = Set.findOne({}, {date: 1}, {sort: {"date" : -1}}, function (err, found) {if (err) {
     console.log(err);
-    // RENDERING DATA IN CASE OF ERROR   !!!
-    /////////////////////////////////////////////////////////////////////////
-    res.render('summary', {heading: "Summary", found: 1});
   } else {
+    if (!found) {
+      // RENDERING DATA IN CASE OF LACK OF EXERCISES
+      /////////////////////////////////////////////////////////////////////////
+      let emptyObject = [{reps: 0,
+      weight: 0,
+      exercise: "None",
+      date: today}];
+
+      res.render('summary', {heading: "Summary", found: emptyObject, today: today, lastFoundDateShort: today});
+    }
     return found
   }
   });
+
+  // UnhandledPromiseRejectionWarning
+  /////////////////////////////////////////////////////////////////////////
 
   newestEntryInSetsCollection.then(function(data) {
     const lastFoundDate = new Date(data.date);
@@ -83,6 +99,7 @@ app.get("/", function (req, res) {
 
 
     const listOfNewest = Set.find({date: { $gte : lastFoundDateShort}}, function(err, found) {
+      console.log(found);
       res.render('summary', {heading: "Summary", found: found, lastFoundDateShort: lastFoundDateShort, today: today});
     })
   })
