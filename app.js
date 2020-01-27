@@ -256,7 +256,7 @@ app.get("/more", function (req, res) {
 // More - body weight
 ///////////////////////////////////////////////////////
 
-app.get("/more/bodyweight", function (req, res) {
+app.get("/more/bodyWeight", function (req, res) {
 
 // Add Find Schema and render
 
@@ -269,13 +269,13 @@ BodyWeight.find({}, function (err, found){
 
   })
 
-  res.render('bodyweight', {heading: "Body Weight", bodyWeightData: arrayOfBodyWeights,
+  res.render('bodyWeight', {heading: "Body Weight", bodyWeightData: arrayOfBodyWeights,
 arrayOfDates: arrayOfDates});
   })
 });
 
 
-app.post("/more/bodyweight", function (req, res) {
+app.post("/more/bodyWeight", function (req, res) {
 
   const bodyWeight = req.body.bodyWeight;
 
@@ -286,7 +286,7 @@ app.post("/more/bodyweight", function (req, res) {
 
   newBodyWeightEntry.save();
 
-  res.redirect("/more/bodyweight");
+  res.redirect("/more/bodyWeight");
 
 })
 
